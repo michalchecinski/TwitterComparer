@@ -139,7 +139,7 @@
     <Analyzer Include="..\..\packages\xunit.analyzers.0.5.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\TwitterComparerLibrary\TwitterComparerLibrary.csproj">
+    <ProjectReference Include="..\..\src\TwitterComparerLibrary\TwitterComparerLibrary.csproj">
       <Project>{30EB128E-A122-4B32-B003-6B122A37A99E}</Project>
       <Name>TwitterComparerLibrary</Name>
     </ProjectReference>

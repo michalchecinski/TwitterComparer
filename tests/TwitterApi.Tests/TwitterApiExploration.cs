@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TwitterComparerLibrary;
 using Xunit;
 
 namespace TwitterApi.Tests
@@ -59,6 +60,18 @@ namespace TwitterApi.Tests
             var result = Execute("mi_checinski").Result;
 
             DeserializeJson(result);
+        }
+
+        [Fact]
+        public void deserialize_json_object_to_User_list()
+        {
+            var result = Execute("mi_checinski").Result;
+
+            var friendsList = JsonConvert.DeserializeObject<RootObject>(result).Users;
+
+            Assert.NotNull(friendsList);
+
+            Assert.NotEmpty(friendsList);
         }
 
         private static dynamic DeserializeJson(string result)

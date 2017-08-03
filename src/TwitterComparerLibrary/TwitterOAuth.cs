@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace TwitterApi.Tests
+namespace TwitterComparerLibrary
 {
     public class TwitterOAuth
     {
