@@ -1,7 +1,3 @@
-*.resharper
-*\_ReSharper*
-*_ReSharper*
-
 [Oo]bj/
 [Bb]in/
 *.user
@@ -11,3 +7,8 @@
 .vs/
 
 App.config
+
+#ReSharper
+*.resharper
+*\_ReSharper*
+*_ReSharper*
