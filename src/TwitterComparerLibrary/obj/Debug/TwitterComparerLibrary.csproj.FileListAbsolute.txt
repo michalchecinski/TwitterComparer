@@ -1,0 +1,11 @@
+C:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\TwitterComparerLibrary.dll
+C:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\TwitterComparerLibrary.pdb
+C:\dev\github\TwitterComparer\src\TwitterComparerLibrary\obj\Debug\TwitterComparerLibrary.csprojResolveAssemblyReference.cache
+C:\dev\github\TwitterComparer\src\TwitterComparerLibrary\obj\Debug\TwitterComparerLibrary.dll
+C:\dev\github\TwitterComparer\src\TwitterComparerLibrary\obj\Debug\TwitterComparerLibrary.pdb
+c:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\Newtonsoft.Json.dll
+c:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\Newtonsoft.Json.xml
+c:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\JsonConfig.dll
+c:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\JsonFx.dll
+c:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\JsonConfig.pdb
+c:\dev\github\TwitterComparer\src\TwitterComparerLibrary\bin\Debug\JsonFx.xml
