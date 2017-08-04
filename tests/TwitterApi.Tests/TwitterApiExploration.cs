@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using JsonConfig;
 using Newtonsoft.Json;
 using TwitterComparerLibrary;
 using Xunit;
@@ -41,6 +43,14 @@ namespace TwitterApi.Tests
         }
 
         [Fact]
+        public void get_authorised_response()
+        {
+            var results = Execute("mi_checinski").Result;
+
+            Assert.NotEqual("{\"errors\":[{\"code\":215,\"message\":\"Bad Authentication data.\"}]}", results);
+        }
+
+        [Fact]
         public void compare_two_list_of_followers_should_not_be_empty()
         {
             var firstResult = Execute("mi_checinski").Result;
@@ -59,7 +69,7 @@ namespace TwitterApi.Tests
         {
             var result = Execute("mi_checinski").Result;
 
-            DeserializeJson(result);
+            JsonConvert.DeserializeObject<dynamic>(result);
         }
 
         [Fact]
@@ -67,16 +77,12 @@ namespace TwitterApi.Tests
         {
             var result = Execute("mi_checinski").Result;
 
-            var friendsList = JsonConvert.DeserializeObject<RootObject>(result).Users;
+            var friendsList = JsonConvert.DeserializeObject<UsersList>(result).Users;
 
             Assert.NotNull(friendsList);
 
             Assert.NotEmpty(friendsList);
         }
 
-        private static dynamic DeserializeJson(string result)
-        {
-            return JsonConvert.DeserializeObject<dynamic>(result);
-        }
     }
 }
