@@ -26,13 +26,14 @@ namespace TwitterComparerLibrary.Tests
         }
 
         [Fact]
-        public async Task common_friends_list_returns_number()
+        public async Task common_friends_list_returns_number_greater_than_zero()
         {
             int commonFriendsNumber = await _compareUsers.CommonFriendsNumber(firstUser, secondUser);
 
             Assert.True(commonFriendsNumber>0);
         }
 
+        //Do not run this test on users that have many followers because it will hit API too many times and cut your payload
         [Fact]
         public async Task common_followers_list_returns_not_empty_list()
         {
@@ -41,6 +42,7 @@ namespace TwitterComparerLibrary.Tests
             Assert.NotEmpty(commonFollowers);
         }
 
+        //Do not run this test on users that have many followers because it will hit API too many times and cut your payload
         [Fact]
         public async Task common_followers_number_returns_number_greater_than_zero()
         {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +13,8 @@ namespace TwitterComparerLibrary
     public class CompareUsers
     {
         private readonly string _token;
+
+        private int _i;
 
         public CompareUsers(string token)
         {
@@ -44,14 +48,31 @@ namespace TwitterComparerLibrary
 
         private async Task<List<User>> GetIntersectList(string firstUserName, string secondUserName, string url)
         {
-            var firstFollowers = await GetResult(url + firstUserName);
-            var secondFollowers = await GetResult(url + secondUserName);
+            List<User> firstFollowersList = new List<User>();
+            JsonUsersRoot firstDeserialize = new JsonUsersRoot();
 
-            var firstDeserialize = JsonConvert.DeserializeObject<UsersList>(firstFollowers);
-            var secondDeserialize = JsonConvert.DeserializeObject<UsersList>(secondFollowers);
+            _i = 0;
 
-            var firstFollowersList = firstDeserialize.Users;
-            var secondFollowersList = secondDeserialize.Users;
+            while (firstDeserialize.NextCursor != 0)
+            {
+                _i++;
+                var firstFollowers = await GetResult(url + firstUserName + "&cursor="+ firstDeserialize.NextCursor);
+                firstDeserialize = JsonConvert.DeserializeObject<JsonUsersRoot>(firstFollowers);
+                var temp = firstFollowersList.Concat(firstDeserialize.Users);
+                firstFollowersList = temp.ToList();
+            }
+
+            List<User> secondFollowersList = new List<User>();
+            JsonUsersRoot secondDeserialize = new JsonUsersRoot();
+
+            while (secondDeserialize.NextCursor != 0)
+            {
+                _i++;
+                var secondFollowers = await GetResult(url + secondUserName + "&cursor=" + secondDeserialize.NextCursor);
+                secondDeserialize = JsonConvert.DeserializeObject<JsonUsersRoot>(secondFollowers);
+                var temp = secondFollowersList.Concat(secondDeserialize.Users);
+                secondFollowersList = temp.ToList();
+            }
 
             return firstFollowersList.Intersect(secondFollowersList).ToList();
         }
@@ -62,7 +83,12 @@ namespace TwitterComparerLibrary
 
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
-            return await httpClient.GetAsync(url).Result.Content.ReadAsStringAsync();
+            var result = await httpClient.GetAsync(url);
+
+            if(result.StatusCode == ((System.Net.HttpStatusCode)429))
+                throw new TimeoutException($"Twitter API rate limit exceeded after {_i} requests");
+
+            return await result.Content.ReadAsStringAsync();
         }
 
     }

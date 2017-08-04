@@ -54,7 +54,7 @@
     <Compile Include="TwitterOAuth.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserInformation.cs" />
-    <Compile Include="UsersList.cs" />
+    <Compile Include="JsonUsersRoot.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

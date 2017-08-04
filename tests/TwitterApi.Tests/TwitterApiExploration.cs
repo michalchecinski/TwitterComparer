@@ -77,7 +77,7 @@ namespace TwitterApi.Tests
         {
             var result = Execute("spetzu").Result;
 
-            var friendsList = JsonConvert.DeserializeObject<UsersList>(result).Users;
+            var friendsList = JsonConvert.DeserializeObject<JsonUsersRoot>(result).Users;
 
             Assert.NotNull(friendsList);
 
