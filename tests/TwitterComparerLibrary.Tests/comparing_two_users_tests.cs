@@ -11,6 +11,8 @@ namespace TwitterComparerLibrary.Tests
 {
     public class comparing_two_users_tests
     {
+        private readonly string firstUser = "maniserowicz";
+        private readonly string secondUser = "spetzu";
 
         private readonly string _customerKey;
         private readonly string _customerSecret;
@@ -26,15 +28,23 @@ namespace TwitterComparerLibrary.Tests
         [Fact]
         public async Task common_friends_list_returns_number()
         {
-            int commonFriendsNumber = await _compareUsers.CommonFriendsNumber("mi_checinski", "maniserowicz");
+            int commonFriendsNumber = await _compareUsers.CommonFriendsNumber(firstUser, secondUser);
 
             Assert.True(commonFriendsNumber>0);
         }
 
         [Fact]
-        public async Task common_followers_list_returns_number()
+        public async Task common_followers_list_returns_not_empty_list()
         {
-            int commonFollowersNumber = await _compareUsers.CommonFollowersNumber("mi_checinski", "maniserowicz");
+            var commonFollowers = await _compareUsers.CommonFollowersList(firstUser, secondUser);
+
+            Assert.NotEmpty(commonFollowers);
+        }
+
+        [Fact]
+        public async Task common_followers_number_returns_number_greater_than_zero()
+        {
+            int commonFollowersNumber = await _compareUsers.CommonFollowersNumber(firstUser, secondUser);
 
             Assert.True(commonFollowersNumber > 0);
         }

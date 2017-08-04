@@ -75,7 +75,7 @@ namespace TwitterApi.Tests
         [Fact]
         public void deserialize_json_object_to_User_list()
         {
-            var result = Execute("mi_checinski").Result;
+            var result = Execute("spetzu").Result;
 
             var friendsList = JsonConvert.DeserializeObject<UsersList>(result).Users;
 

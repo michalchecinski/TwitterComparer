@@ -11,6 +11,7 @@ namespace TwitterComparerLibrary.Tests
 {
     public class get_info_about_user_tests
     {
+
         private readonly string _customerKey;
         private readonly string _customerSecret;
         private readonly UserInformation _userInformation;

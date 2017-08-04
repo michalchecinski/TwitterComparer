@@ -38,7 +38,7 @@ namespace TwitterComparerLibrary
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return 17 * Id.GetHashCode();
         }
     }
 }
