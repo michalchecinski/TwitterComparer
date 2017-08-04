@@ -30,7 +30,7 @@ namespace TwitterComparerLibrary
                             .Groups[1].Value;
                 }
             }
-
+            
             return token;
         }
     }

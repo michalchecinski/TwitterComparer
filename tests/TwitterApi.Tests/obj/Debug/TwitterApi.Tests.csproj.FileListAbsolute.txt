@@ -69,3 +69,7 @@ c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\Newtonsoft.Json.d
 c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\Newtonsoft.Json.xml
 c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\TwitterComparerLibrary.dll
 c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\TwitterComparerLibrary.pdb
+c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\JsonConfig.dll
+c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\JsonFx.dll
+c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\JsonConfig.pdb
+c:\dev\github\TwitterComparer\tests\TwitterApi.Tests\bin\Debug\JsonFx.xml
