@@ -16,22 +16,33 @@ namespace TwitterComparerLibrary
             _token = token;
         }
 
-        private string GetResult(string url)
+        private async Task<string> GetResult(string url)
         {
             var httpClient = new HttpClient();
 
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
-            return httpClient.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
+            return await httpClient.GetAsync(url).Result.Content.ReadAsStringAsync();
         }
 
-        public int CommonFriendsNumber(string firstUserName, string secondUserName)
+        public async Task<int> CommonFriendsNumber(string firstUserName, string secondUserName)
         {
-            var firstFriends = GetResult($"https://api.twitter.com/1.1/friends/list.json?screen_name={firstUserName}");
-            var secondFriends = GetResult($"https://api.twitter.com/1.1/friends/list.json?screen_name={secondUserName}");
+            var firstFriends = await GetResult($"https://api.twitter.com/1.1/friends/list.json?screen_name={firstUserName}");
+            var secondFriends = await GetResult($"https://api.twitter.com/1.1/friends/list.json?screen_name={secondUserName}");
 
             return firstFriends.Intersect(secondFriends).Count();
         }
+
+        public async Task<int> CommonFollowersNumber(string firstUserName, string secondUserName)
+        {
+            string url = "https://api.twitter.com/1.1/followers/list.json?screen_name=";
+            var firstFriends = await GetResult(url+firstUserName);
+            var secondFriends = await GetResult(url+secondUserName);
+
+            return firstFriends.Intersect(secondFriends).Count();
+        }
+
+        
 
     }
 }

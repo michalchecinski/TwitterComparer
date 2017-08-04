@@ -14,21 +14,29 @@ namespace TwitterComparerLibrary.Tests
 
         private readonly string _customerKey;
         private readonly string _customerSecret;
+        private readonly CompareUsers _compareUsers;
 
         public comparing_two_users_tests()
         {
             _customerKey =  ConfigurationManager.AppSettings["CustomerKey"];
             _customerSecret = ConfigurationManager.AppSettings["CustomerSecret"];
+            _compareUsers = new CompareUsers(TwitterOAuth.GetToken(_customerKey, _customerSecret).Result);
         }
 
         [Fact]
-        public void common_friends_list_returns_number()
+        public async Task common_friends_list_returns_number()
         {
-            CompareUsers compareUsers = new CompareUsers(TwitterOAuth.GetToken(_customerKey, _customerSecret).Result);
-
-            int commonFriendsNumber = compareUsers.CommonFriendsNumber("mi_checinski", "maniserowicz");
+            int commonFriendsNumber = await _compareUsers.CommonFriendsNumber("mi_checinski", "maniserowicz");
 
             Assert.True(commonFriendsNumber>0);
+        }
+
+        [Fact]
+        public async Task common_followers_list_returns_number()
+        {
+            int commonFollowersNumber = await _compareUsers.CommonFollowersNumber("mi_checinski", "maniserowicz");
+
+            Assert.True(commonFollowersNumber > 0);
         }
     }
 }
