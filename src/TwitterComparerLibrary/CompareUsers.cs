@@ -79,14 +79,18 @@ namespace TwitterComparerLibrary
 
         private async Task<string> GetResult(string url)
         {
-            var httpClient = new HttpClient();
+            HttpResponseMessage result;
+            using (var httpClient = new HttpClient())
+            {
 
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+                httpClient.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
-            var result = await httpClient.GetAsync(url);
+                result = await httpClient.GetAsync(url);
+            }
 
-            if(result.StatusCode == ((System.Net.HttpStatusCode)429))
-                throw new TimeoutException($"Twitter API rate limit exceeded after {_i} requests");
+            if (result.StatusCode == ((System.Net.HttpStatusCode) 429))
+                    throw new TimeoutException($"Twitter API rate limit exceeded after {_i} requests");
 
             return await result.Content.ReadAsStringAsync();
         }
