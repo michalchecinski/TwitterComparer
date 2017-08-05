@@ -59,7 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="comparing_two_users_tests.cs" />
+    <Compile Include="comparing_two_users_friends_tests.cs" />
+    <Compile Include="comparing_two_users_followers_tests.cs" />
     <Compile Include="get_info_about_user_tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
