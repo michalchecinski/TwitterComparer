@@ -16,7 +16,7 @@ namespace TwitterComparerLibrary
         {
             const string url = "https://api.twitter.com/1.1/users/show.json?screen_name=";
 
-            var json = await TwitterApiRequestHandler.GetResultAsync(url + userName, _token);
+            var json = await new TwitterApiRequestHandler(_token).GetResultAsync(url + userName);
 
             return JsonConvert.DeserializeObject<User>(json);
         }

@@ -11,31 +11,38 @@ namespace TwitterComparerLibrary
     {
         private static int _i;
 
-        public static async Task<List<User>> GetCommonUserstListAsync(string firstUserName, string secondUserName, string url, string token)
+        private readonly string _token;
+
+        public TwitterApiRequestHandler(string token)
+        {
+            _token = token;
+        }
+
+        public async Task<List<User>> GetCommonUserstListAsync(string firstUserName, string secondUserName, string url)
         {
             _i = 0;
 
-            List<User> firstList = await GetAllUsersListAsync(firstUserName, url, token);
+            var firstList = await GetAllUsersListAsync(firstUserName, url);
 
-            List<User> secondList = await GetAllUsersListAsync(secondUserName, url, token);
+            var secondList = await GetAllUsersListAsync(secondUserName, url);
 
             return GetIntersectUserList(firstList, secondList);
         }
 
-        private static async Task<List<User>> GetAllUsersListAsync(string userName, string url, string token)
+        private async Task<List<User>> GetAllUsersListAsync(string userName, string url)
         {
-            JsonUsersRoot firstDeserialize = new JsonUsersRoot();
-            List<User> firstList = new List<User>();
+            var firstDeserialize = new JsonUsersRoot();
+            var userList = new List<User>();
             while (firstDeserialize.NextCursor != 0)
             {
                 _i++;
-                var firstResult = await GetResultAsync(url + userName + "&cursor=" + firstDeserialize.NextCursor, token);
+                var firstResult = await GetResultAsync(url + userName + "&cursor=" + firstDeserialize.NextCursor);
                 firstDeserialize = JsonConvert.DeserializeObject<JsonUsersRoot>(firstResult);
-                var temp = firstList.Concat(firstDeserialize.Users);
-                firstList = temp.ToList();
+                var temp = userList.Concat(firstDeserialize.Users);
+                userList = temp.ToList();
             }
 
-            return firstList;
+            return userList;
         }
 
         private static List<User> GetIntersectUserList(IEnumerable<User> firstList, IEnumerable<User> secondList)
@@ -43,14 +50,14 @@ namespace TwitterComparerLibrary
             return firstList.Intersect(secondList).ToList();
         }
 
-        public static async Task<string> GetResultAsync(string url, string token)
+        public async Task<string> GetResultAsync(string url)
         {
             HttpResponseMessage result;
             using (var httpClient = new HttpClient())
             {
 
                 httpClient.DefaultRequestHeaders.Authorization =
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
                 result = await httpClient.GetAsync(url);
             }
