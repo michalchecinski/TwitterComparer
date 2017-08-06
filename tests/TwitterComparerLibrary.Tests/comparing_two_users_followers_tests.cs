@@ -23,7 +23,7 @@ namespace TwitterComparerLibrary.Tests
         {
             var customerKey =  ConfigurationManager.AppSettings["CustomerKey"];
             var customerSecret = ConfigurationManager.AppSettings["CustomerSecret"];
-            _compareUsersFollowers = new CompareUsersFollowers(OAuthToken.Generate(customerKey, customerSecret).Result);
+            _compareUsersFollowers = new CompareUsersFollowers(OAuthTwitterToken.GenerateAsync(customerKey, customerSecret).Result);
         }
 
         [Fact]
