@@ -34,7 +34,7 @@ namespace TwitterComparerLibrary
                 LastUpdate > DateTime.Now.AddMinutes(-30))
             {
                 const string url = "https://api.twitter.com/1.1/followers/list.json?screen_name=";
-                LastFollowersList = await TwitterApiRequestHandler.GetIntersectListAsync(firstUserName, secondUserName, url, _token);
+                LastFollowersList = await TwitterApiRequestHandler.GetCommonUserstListAsync(firstUserName, secondUserName, url, _token);
                 LastUpdate = DateTime.Now;
                 lastFirstUser = firstUserName;
                 lastSecondUser = secondUserName;

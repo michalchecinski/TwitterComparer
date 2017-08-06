@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterApi.Tests", "tests\TwitterApi.Tests\TwitterApi.Tests.csproj", "{F7ED0985-15CD-4A58-9E4A-2703C5B979D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterComparerLibrary", "src\TwitterComparerLibrary\TwitterComparerLibrary.csproj", "{30EB128E-A122-4B32-B003-6B122A37A99E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterComparerLibrary.Tests", "tests\TwitterComparerLibrary.Tests\TwitterComparerLibrary.Tests.csproj", "{57352C23-37C2-4FDF-A036-8FA662E6D542}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterComparerLibrary.Tests.EndToEnd", "tests\TwitterComparerLibrary.Tests\TwitterComparerLibrary.Tests.EndToEnd.csproj", "{57352C23-37C2-4FDF-A036-8FA662E6D542}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{45168F08-7106-4921-AFCE-3FA2AC313F14}"
 	ProjectSection(SolutionItems) = preProject

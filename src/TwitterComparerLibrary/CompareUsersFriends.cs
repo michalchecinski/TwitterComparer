@@ -35,12 +35,12 @@ namespace TwitterComparerLibrary
 
         public async Task<List<User>> GetCommonFriendsListAsync(string firstUserName, string secondUserName)
         {
-            //if (lastFirstUser != firstUserName ||
-            //    lastSecondUser != secondUserName ||
-            //    LastUpdate > DateTime.Now.AddMinutes(-30))
+            if (lastFirstUser != firstUserName ||
+                lastSecondUser != secondUserName ||
+                LastUpdate > DateTime.Now.AddMinutes(-30))
             {
                 const string url = "https://api.twitter.com/1.1/friends/list.json?screen_name=";
-                LastFriendsList = await TwitterApiRequestHandler.GetIntersectListAsync(firstUserName, secondUserName, url, _token);
+                LastFriendsList = await TwitterApiRequestHandler.GetCommonUserstListAsync(firstUserName, secondUserName, url, _token);
                 LastUpdate = DateTime.Now;
                 lastFirstUser = firstUserName;
                 lastSecondUser = secondUserName;

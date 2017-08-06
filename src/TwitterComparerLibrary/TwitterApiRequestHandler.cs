@@ -11,7 +11,7 @@ namespace TwitterComparerLibrary
     {
         private static int _i;
 
-        public static async Task<List<User>> GetIntersectListAsync(string firstUserName, string secondUserName, string url, string token)
+        public static async Task<List<User>> GetCommonUserstListAsync(string firstUserName, string secondUserName, string url, string token)
         {
             _i = 0;
 
