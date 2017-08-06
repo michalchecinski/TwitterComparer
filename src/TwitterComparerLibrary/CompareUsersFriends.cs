@@ -14,13 +14,12 @@ namespace TwitterComparerLibrary
     {
         private static string _token;
 
-        private static List<User> LastFriendsList;
+        private static List<User> _lastFriendsList;
 
-        private static DateTime LastUpdate;
+        private static DateTime _lastUpdate;
 
-        private static string lastFirstUser;
-        private static string lastSecondUser;
-        private readonly TwitterApiRequestHandler _twitterApiRequestHandler;
+        private static string _lastFirstUser;
+        private static string _lastSecondUser;
 
         public CompareUsersFriends(string token)
         {
@@ -35,18 +34,18 @@ namespace TwitterComparerLibrary
 
         public async Task<List<User>> GetCommonFriendsListAsync(string firstUserName, string secondUserName)
         {
-            if (lastFirstUser != firstUserName ||
-                lastSecondUser != secondUserName ||
-                LastUpdate > DateTime.Now.AddMinutes(-30))
+            if (_lastFirstUser != firstUserName ||
+                _lastSecondUser != secondUserName ||
+                _lastUpdate > DateTime.Now.AddMinutes(-30))
             {
                 const string url = "https://api.twitter.com/1.1/friends/list.json?screen_name=";
-                LastFriendsList = await new TwitterApiRequestHandler(_token).GetCommonUserstListAsync(firstUserName, secondUserName, url);
-                LastUpdate = DateTime.Now;
-                lastFirstUser = firstUserName;
-                lastSecondUser = secondUserName;
+                _lastFriendsList = await new TwitterApiRequestHandler(_token).GetCommonUserstListAsync(firstUserName, secondUserName, url);
+                _lastUpdate = DateTime.Now;
+                _lastFirstUser = firstUserName;
+                _lastSecondUser = secondUserName;
             }
 
-            return LastFriendsList;
+            return _lastFriendsList;
         }
 
     }
