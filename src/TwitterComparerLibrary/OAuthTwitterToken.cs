@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace TwitterComparerLibrary
 {
-    public class OAuthToken
+    public class OAuthTwitterToken
     {
-        public static async Task<string> Generate(string customerKey, string customerSecret)
+        public static async Task<string> GenerateAsync(string customerKey, string customerSecret)
         {
             var b64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(
                 $"{WebUtility.UrlEncode(customerKey)}:{WebUtility.UrlEncode(customerSecret)}"));
