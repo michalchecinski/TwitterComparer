@@ -14,7 +14,7 @@ namespace TwitterComparerLibrary.Tests
 
         //Do not run those tests on users that have many followers(more than 300 followers in practice) 
         //because it will hit API too many times and will exceed API rate limit
-        private const string _firstUser = "rotsap_";
+        private const string _firstUser = "MDziubiak";
         private const string _secondUser = "mi_checinski";
 
         private readonly CompareUsersFollowers _compareUsersFollowers;

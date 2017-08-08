@@ -29,17 +29,33 @@ namespace TwitterComparerLibrary
 
         public async Task<List<User>> CommonFollowersList(string firstUserName, string secondUserName)
         {
-            if (_lastFirstUser != firstUserName || 
-                _lastSecondUser != secondUserName ||  
-                _lastUpdate > DateTime.Now.AddMinutes(-30))
+            if (SameUserNames(firstUserName, secondUserName) &&
+                _lastUpdate >= DateTime.Now.AddMinutes(-16))
             {
-                const string url = "https://api.twitter.com/1.1/followers/list.json?screen_name=";
-                _lastFollowersList = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
-                _lastUpdate = DateTime.Now;
-                _lastFirstUser = firstUserName;
-                _lastSecondUser = secondUserName;
+                return _lastFollowersList;
             }
+            const string url = "https://api.twitter.com/1.1/followers/list.json?screen_name=";
+            _lastFollowersList = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
+            _lastUpdate = DateTime.Now;
+            _lastFirstUser = firstUserName;
+            _lastSecondUser = secondUserName;
             return _lastFollowersList;
+        }
+
+
+        private bool SameUserNames(string firstUserName, string secondUserName)
+        {
+            if (_lastFirstUser == firstUserName && _lastSecondUser == secondUserName)
+            {
+                return true;
+            }
+            if (_lastFirstUser == secondUserName && _lastSecondUser == firstUserName)
+            {
+                return true;
+            }
+
+            return false;
+
         }
     }
 }

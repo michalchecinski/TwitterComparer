@@ -10,10 +10,13 @@ namespace TwitterComparerLibrary.Tests
 {
     public class comparing_two_users_friends_tests
     {
+        //Do not run those tests on users that have many friends(more than 300 friends in practice) 
+        //because it will hit API too many times and will exceed API rate limit
+
         private readonly CompareUsersFriends _compareUsersFriends;
 
         private const string _firstUser = "mi_checinski";
-        private const string _secondUser = "rotsap_";
+        private const string _secondUser = "MDziubiak";
 
         public comparing_two_users_friends_tests()
         {
