@@ -39,7 +39,7 @@ namespace TwitterComparerLibrary
                 _lastUpdate > DateTime.Now.AddMinutes(-30))
             {
                 const string url = "https://api.twitter.com/1.1/friends/list.json?screen_name=";
-                _lastFriendsList = await new TwitterApiRequestHandler(_token).GetCommonUserstListAsync(firstUserName, secondUserName, url);
+                _lastFriendsList = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
                 _lastUpdate = DateTime.Now;
                 _lastFirstUser = firstUserName;
                 _lastSecondUser = secondUserName;
