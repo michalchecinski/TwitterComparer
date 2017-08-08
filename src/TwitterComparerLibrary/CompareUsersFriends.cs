@@ -14,12 +14,7 @@ namespace TwitterComparerLibrary
     {
         private readonly string _token;
 
-        private static List<User> _lastFriendsList;
-
-        private static DateTime _lastUpdate;
-
-        private static string _lastFirstUser;
-        private static string _lastSecondUser;
+        private static readonly Cache _cache = new Cache();
 
         public CompareUsersFriends(string token)
         {
@@ -35,27 +30,25 @@ namespace TwitterComparerLibrary
         public async Task<List<User>> GetCommonFriendsListAsync(string firstUserName, string secondUserName)
         {
 
-            if (SameUserNames(firstUserName, secondUserName)  && 
-                _lastUpdate >= DateTime.Now.AddMinutes(-16))
+            if (SameUserNames(firstUserName, secondUserName)  &&
+                _cache.UpdateDateTime >= DateTime.Now.AddMinutes(-16))
             {
-                return _lastFriendsList;
+                return _cache.UsersList;
             }
             const string url = "https://api.twitter.com/1.1/friends/list.json?screen_name=";
-            _lastFriendsList = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
-            _lastUpdate = DateTime.Now;
-            _lastFirstUser = firstUserName;
-            _lastSecondUser = secondUserName;
+            var list = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
+            _cache.Update(firstUserName, secondUserName, list);
 
-            return _lastFriendsList;
+            return _cache.UsersList;
         }
 
         private bool SameUserNames(string firstUserName, string secondUserName)
         {
-            if (_lastFirstUser == firstUserName && _lastSecondUser == secondUserName)
+            if (_cache.FirstUser == firstUserName && _cache.SecondUser == secondUserName)
             {
                 return true;
             }
-            if (_lastFirstUser == secondUserName && _lastSecondUser == firstUserName)
+            if (_cache.FirstUser == secondUserName && _cache.SecondUser == firstUserName)
             {
                 return true;
             }
