@@ -19,15 +19,39 @@ namespace TwitterComparerLibrary
             _token = token;
         }
 
-        public async Task<List<User>> GetCommonUsersListAsync(string firstUserName, string secondUserName, string url)
+        public async Task<List<User>> GetCommonUsersListAsync(string firstUserName, string secondUserName, string url, Cache cache)
         {
             _i = 0;
 
-            var firstList = await GetAllUsersListAsync(firstUserName, url);
+            if (SameUserNames(firstUserName, secondUserName, cache) &&
+                cache.UpdateDateTime >= DateTime.Now.AddMinutes(-16))
+            {
+                return cache.UsersList;
+            }
 
+            var firstList = await GetAllUsersListAsync(firstUserName, url);
             var secondList = await GetAllUsersListAsync(secondUserName, url);
 
-            return GetIntersectUserList(firstList, secondList);
+            var list = GetIntersectUserList(firstList, secondList);
+
+            cache.Update(firstUserName, secondUserName, list);
+
+            return cache.UsersList;
+        }
+
+        private bool SameUserNames(string firstUserName, string secondUserName, Cache cache)
+        {
+            if (cache.FirstUser == firstUserName && cache.SecondUser == secondUserName)
+            {
+                return true;
+            }
+            if (cache.FirstUser == secondUserName && cache.SecondUser == firstUserName)
+            {
+                return true;
+            }
+
+            return false;
+
         }
 
         private async Task<List<User>> GetAllUsersListAsync(string userName, string url)
@@ -56,10 +80,8 @@ namespace TwitterComparerLibrary
             HttpResponseMessage result;
             using (var httpClient = new HttpClient())
             {
-
                 httpClient.DefaultRequestHeaders.Authorization =
                     new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-
                 result = await httpClient.GetAsync(url);
             }
 

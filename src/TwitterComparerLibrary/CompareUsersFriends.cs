@@ -14,7 +14,7 @@ namespace TwitterComparerLibrary
     {
         private readonly string _token;
 
-        private static readonly Cache _cache = new Cache();
+        private static readonly Cache Cache = new Cache();
 
         public CompareUsersFriends(string token)
         {
@@ -29,26 +29,17 @@ namespace TwitterComparerLibrary
 
         public async Task<List<User>> GetCommonFriendsListAsync(string firstUserName, string secondUserName)
         {
-
-            if (SameUserNames(firstUserName, secondUserName)  &&
-                _cache.UpdateDateTime >= DateTime.Now.AddMinutes(-16))
-            {
-                return _cache.UsersList;
-            }
             const string url = "https://api.twitter.com/1.1/friends/list.json?screen_name=";
-            var list = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
-            _cache.Update(firstUserName, secondUserName, list);
-
-            return _cache.UsersList;
+            return await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url, Cache);
         }
 
         private bool SameUserNames(string firstUserName, string secondUserName)
         {
-            if (_cache.FirstUser == firstUserName && _cache.SecondUser == secondUserName)
+            if (Cache.FirstUser == firstUserName && Cache.SecondUser == secondUserName)
             {
                 return true;
             }
-            if (_cache.FirstUser == secondUserName && _cache.SecondUser == firstUserName)
+            if (Cache.FirstUser == secondUserName && Cache.SecondUser == firstUserName)
             {
                 return true;
             }

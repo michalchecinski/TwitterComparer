@@ -41,7 +41,8 @@ namespace TwitterComparerLibrary.Tests
         [Fact]
         public async Task web_exception_thrown_when_user_not_found()
         {
-            var ex = await Assert.ThrowsAsync<WebException>(async () => await _userInformation.Get("ofksofs"));
+            await Assert.ThrowsAsync<WebException>(async () => 
+                    await _userInformation.Get("ofksofs"));
         }
 
     }

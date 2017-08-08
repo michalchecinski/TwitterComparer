@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -39,6 +40,14 @@ namespace TwitterComparerLibrary.Tests
             var commonFollowers = await _compareUsersFriends.GetCommonFriendsListAsync(_firstUser, _secondUser);
 
             Assert.NotEmpty(commonFollowers);
+        }
+
+        [Fact]
+        public async Task web_exception_thrown_when_one_not_user()
+        {
+            await Assert.ThrowsAsync<WebException>(async ()
+                => await _compareUsersFriends.GetCommonFriendsListAsync(_firstUser, "ofksofs"));
+
         }
 
     }

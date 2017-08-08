@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using JsonConfig;
 using Xunit;
+using Xunit.Sdk;
 
 namespace TwitterComparerLibrary.Tests
 {
@@ -29,7 +31,7 @@ namespace TwitterComparerLibrary.Tests
         [Fact]
         public async Task common_followers_list_returns_not_empty_list()
         {
-            var commonFollowers = await _compareUsersFollowers.CommonFollowersList(_firstUser, _secondUser);
+            var commonFollowers = await _compareUsersFollowers.CommonFollowersListAsync(_firstUser, _secondUser);
 
             Assert.NotEmpty(commonFollowers);
         }
@@ -37,9 +39,17 @@ namespace TwitterComparerLibrary.Tests
         [Fact]
         public async Task common_followers_number_returns_number_greater_than_zero()
         {
-            int commonFollowersNumber = await _compareUsersFollowers.CommonFollowersNumber(_firstUser, _secondUser);
+            int commonFollowersNumber = await _compareUsersFollowers.CommonFollowersNumberAsync(_firstUser, _secondUser);
 
             Assert.True(commonFollowersNumber > 0);
+        }
+
+        [Fact]
+        public async Task web_exception_thrown_when_one_not_user()
+        {
+           await Assert.ThrowsAsync<WebException>(async () => 
+                await _compareUsersFollowers.CommonFollowersListAsync(_firstUser, "ofksofs"));
+
         }
     }
 }
