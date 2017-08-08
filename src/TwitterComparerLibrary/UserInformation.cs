@@ -20,5 +20,6 @@ namespace TwitterComparerLibrary
 
             return JsonConvert.DeserializeObject<User>(json);
         }
+
     }
 }

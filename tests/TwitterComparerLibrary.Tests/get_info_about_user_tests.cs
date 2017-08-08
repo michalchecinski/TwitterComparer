@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +36,12 @@ namespace TwitterComparerLibrary.Tests
             };
 
             Assert.Equal(expectedUser, user);
+        }
+
+        [Fact]
+        public async Task web_exception_thrown_when_user_not_found()
+        {
+            var ex = await Assert.ThrowsAsync<WebException>(async () => await _userInformation.Get("ofksofs"));
         }
 
     }
