@@ -18,7 +18,7 @@ namespace TwitterComparerLibrary
             _token = token;
         }
 
-        public async Task<List<User>> GetCommonUserstListAsync(string firstUserName, string secondUserName, string url)
+        public async Task<List<User>> GetCommonUsersListAsync(string firstUserName, string secondUserName, string url)
         {
             _i = 0;
 
