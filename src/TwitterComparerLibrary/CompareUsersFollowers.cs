@@ -9,12 +9,12 @@ namespace TwitterComparerLibrary
     {
         private readonly string _token;
 
-        private static string lastFirstUser;
-        private static string lastSecondUser;
+        private static string _lastFirstUser;
+        private static string _lastSecondUser;
 
-        private static DateTime LastUpdate;
+        private static DateTime _lastUpdate;
 
-        private static List<User> LastFollowersList;
+        private static List<User> _lastFollowersList;
 
         public CompareUsersFollowers(string token)
         {
@@ -29,17 +29,17 @@ namespace TwitterComparerLibrary
 
         public async Task<List<User>> CommonFollowersList(string firstUserName, string secondUserName)
         {
-            if (lastFirstUser != firstUserName || 
-                lastSecondUser != secondUserName ||  
-                LastUpdate > DateTime.Now.AddMinutes(-30))
+            if (_lastFirstUser != firstUserName || 
+                _lastSecondUser != secondUserName ||  
+                _lastUpdate > DateTime.Now.AddMinutes(-30))
             {
                 const string url = "https://api.twitter.com/1.1/followers/list.json?screen_name=";
-                LastFollowersList = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
-                LastUpdate = DateTime.Now;
-                lastFirstUser = firstUserName;
-                lastSecondUser = secondUserName;
+                _lastFollowersList = await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
+                _lastUpdate = DateTime.Now;
+                _lastFirstUser = firstUserName;
+                _lastSecondUser = secondUserName;
             }
-            return LastFollowersList;
+            return _lastFollowersList;
         }
     }
 }
