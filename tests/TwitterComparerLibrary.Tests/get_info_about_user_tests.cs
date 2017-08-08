@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
+﻿using System.Configuration;
 using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,16 +7,13 @@ namespace TwitterComparerLibrary.Tests
 {
     public class get_info_about_user_tests
     {
-
-        private readonly string _customerKey;
-        private readonly string _customerSecret;
         private readonly UserInformation _userInformation;
 
         public get_info_about_user_tests()
         {
-            _customerKey = ConfigurationManager.AppSettings["CustomerKey"];
-            _customerSecret = ConfigurationManager.AppSettings["CustomerSecret"];
-            _userInformation = new UserInformation(OAuthTwitterToken.GenerateAsync(_customerKey, _customerSecret).Result);
+            var customerKey = ConfigurationManager.AppSettings["CustomerKey"];
+            var customerSecret = ConfigurationManager.AppSettings["CustomerSecret"];
+            _userInformation = new UserInformation(OAuthTwitterToken.GenerateAsync(customerKey, customerSecret).Result);
         }
 
         [Fact]
@@ -43,6 +35,22 @@ namespace TwitterComparerLibrary.Tests
         {
             await Assert.ThrowsAsync<WebException>(async () => 
                     await _userInformation.Get("ofksofs"));
+        }
+
+        [Fact]
+        public async Task not_existing_user_should_be_false()
+        {
+            var result = await _userInformation.UserExistsAsync("ofksofs");
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public async Task existing_user_should_be_true()
+        {
+            var result = await _userInformation.UserExistsAsync("mi_checinski");
+
+            Assert.True(result);
         }
 
     }
