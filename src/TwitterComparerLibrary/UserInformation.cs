@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace TwitterComparerLibrary
@@ -19,6 +21,24 @@ namespace TwitterComparerLibrary
             var json = await new TwitterApiRequestHandler(_token).GetResultAsync(url + userName);
 
             return JsonConvert.DeserializeObject<User>(json);
+        }
+
+        public async Task<bool> UserExistsAsync(string userName)
+        {
+            try
+            {
+                await Get(userName);
+            }
+            catch (WebException e)
+            {
+                if (e.Message == "Content not found")
+                {
+                    return false;
+                }
+                throw;
+
+            }
+            return true;
         }
 
     }

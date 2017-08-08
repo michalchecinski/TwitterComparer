@@ -23,6 +23,18 @@ namespace TwitterComparerLibrary
         {
             _i = 0;
 
+            var firstUserExist = await new UserInformation(_token).UserExistsAsync(firstUserName);
+            var secondUserExist = await new UserInformation(_token).UserExistsAsync(secondUserName);
+
+            if (firstUserExist == false)
+            {
+                throw new WebException($"User {firstUserName} does not exist");
+            }
+            if(secondUserExist == false)
+            {
+                throw new WebException($"User {secondUserName} does not exist");
+            }
+
             if (SameUserNames(firstUserName, secondUserName, cache) &&
                 cache.UpdateDateTime >= DateTime.Now.AddMinutes(-16))
             {
