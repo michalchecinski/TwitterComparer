@@ -13,7 +13,7 @@ namespace TwitterComparerLibrary.Tests
         {
             var customerKey = ConfigurationManager.AppSettings["CustomerKey"];
             var customerSecret = ConfigurationManager.AppSettings["CustomerSecret"];
-            _userInformation = new UserInformation(OAuthTwitterToken.GenerateAsync(customerKey, customerSecret).Result);
+            _userInformation = new UserInformation(OAuthTwitterToken.GetAsync(customerKey, customerSecret).Result);
         }
 
         [Fact]

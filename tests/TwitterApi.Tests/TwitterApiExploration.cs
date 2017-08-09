@@ -26,7 +26,7 @@ namespace TwitterApi.Tests
 
             string customerKey = ConfigurationManager.AppSettings["CustomerKey"];
             string customerSecret = ConfigurationManager.AppSettings["CustomerSecret"];
-            string token = await OAuthTwitterToken.GenerateAsync(customerKey, customerSecret);
+            string token = await OAuthTwitterToken.GetAsync(customerKey, customerSecret);
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             return httpClient.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
