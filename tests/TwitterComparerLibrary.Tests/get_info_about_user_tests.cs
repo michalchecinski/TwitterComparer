@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Net;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 
 namespace TwitterComparerLibrary.Tests
@@ -27,14 +28,14 @@ namespace TwitterComparerLibrary.Tests
                 Id = 1380219330
             };
 
-            Assert.Equal(expectedUser, user);
+            user.ShouldBe(expectedUser);
         }
 
         [Fact]
         public async Task web_exception_thrown_when_user_not_found()
         {
-            await Assert.ThrowsAsync<WebException>(async () => 
-                    await _userInformation.Get("ofksofs"));
+            await Should.ThrowAsync<WebException>(async () =>
+                await _userInformation.Get("ofksofs"));
         }
 
         [Fact]
@@ -42,7 +43,7 @@ namespace TwitterComparerLibrary.Tests
         {
             var result = await _userInformation.UserExistsAsync("ofksofs");
 
-            Assert.False(result);
+            result.ShouldBeFalse();
         }
 
         [Fact]
@@ -50,7 +51,7 @@ namespace TwitterComparerLibrary.Tests
         {
             var result = await _userInformation.UserExistsAsync("mi_checinski");
 
-            Assert.True(result);
+            result.ShouldBeTrue();
         }
 
     }

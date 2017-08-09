@@ -2,7 +2,7 @@
 
 namespace TwitterComparerLibrary.Model
 {
-    public class ComparedUsersDto
+    public class CompareUsersResult
     {
         public User FirstUser { get; private set; }
         public User SecondUser { get; private set; }
@@ -11,7 +11,7 @@ namespace TwitterComparerLibrary.Model
         public int CommonFollowersNumber { get; private set; }
         public int CommonFriendsNumber { get; private set; }
 
-        public ComparedUsersDto(User firstUser, User secondUser, IList<User> commonFollowersList, IList<User> commonFriendsList, int commonFollowersNumber, int commonFriendsNumber)
+        public CompareUsersResult(User firstUser, User secondUser, IList<User> commonFollowersList, IList<User> commonFriendsList, int commonFollowersNumber, int commonFriendsNumber)
         {
             FirstUser = firstUser;
             SecondUser = secondUser;
@@ -21,7 +21,7 @@ namespace TwitterComparerLibrary.Model
             CommonFriendsNumber = commonFriendsNumber;
         }
 
-        public ComparedUsersDto(User firstUser, User secondUser, IList<User> commonFollowersList, IList<User> commonFriendsList)
+        public CompareUsersResult(User firstUser, User secondUser, IList<User> commonFollowersList, IList<User> commonFriendsList)
         {
             FirstUser = firstUser;
             SecondUser = secondUser;

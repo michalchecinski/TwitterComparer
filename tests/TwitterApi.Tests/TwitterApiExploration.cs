@@ -2,14 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using JsonConfig;
 using Newtonsoft.Json;
 using TwitterComparerLibrary;
 using Xunit;

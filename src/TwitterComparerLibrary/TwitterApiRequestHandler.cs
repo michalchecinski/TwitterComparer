@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace TwitterComparerLibrary
 {
-    public class TwitterApiRequestHandler
+    internal class TwitterApiRequestHandler
     {
         private static int _requestNumber;
 

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
+﻿using System.Configuration;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using JsonConfig;
+using Shouldly;
 using Xunit;
-using Xunit.Sdk;
 
 namespace TwitterComparerLibrary.Tests
 {
@@ -33,7 +28,7 @@ namespace TwitterComparerLibrary.Tests
         {
             var commonFollowers = await _compareUsersFollowers.CommonFollowersListAsync(_firstUser, _secondUser);
 
-            Assert.NotEmpty(commonFollowers);
+            commonFollowers.ShouldNotBeEmpty();
         }
 
         [Fact]
@@ -41,13 +36,13 @@ namespace TwitterComparerLibrary.Tests
         {
             int commonFollowersNumber = await _compareUsersFollowers.CommonFollowersNumberAsync(_firstUser, _secondUser);
 
-            Assert.True(commonFollowersNumber > 0);
+            commonFollowersNumber.ShouldBeGreaterThan(0);
         }
 
         [Fact]
         public async Task web_exception_thrown_when_one_not_user()
         {
-           await Assert.ThrowsAsync<WebException>(async () => 
+           await Should.ThrowAsync<WebException>(async () => 
                 await _compareUsersFollowers.CommonFollowersListAsync(_firstUser, "ofksofs"));
 
         }

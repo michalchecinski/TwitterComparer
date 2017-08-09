@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace TwitterComparerLibrary
 {
@@ -31,21 +25,6 @@ namespace TwitterComparerLibrary
         {
             const string url = "https://api.twitter.com/1.1/friends/list.json?screen_name=";
             return await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url, Cache);
-        }
-
-        private bool SameUserNames(string firstUserName, string secondUserName)
-        {
-            if (Cache.FirstUser == firstUserName && Cache.SecondUser == secondUserName)
-            {
-                return true;
-            }
-            if (Cache.FirstUser == secondUserName && Cache.SecondUser == firstUserName)
-            {
-                return true;
-            }
-
-            return false;
-
         }
 
     }
