@@ -1,12 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Configuration;
 using System.Threading.Tasks;
+using Shouldly;
+using Xunit;
 
 namespace TwitterComparerLibrary.Tests
 {
-    class comparing_two_users_facade_tests
+    public class comparing_two_users_facade_tests
     {
+        private const string _firstUser = "MDziubiak";
+        private const string _secondUser = "mi_checinski";
+
+        private readonly Compare _compare;
+
+        public comparing_two_users_facade_tests()
+        {
+            var customerKey = ConfigurationManager.AppSettings["CustomerKey"];
+            var customerSecret = ConfigurationManager.AppSettings["CustomerSecret"];
+            _compare = new Compare(OAuthTwitterToken.GetAsync(customerKey, customerSecret).Result);
+        }
+
+        [Fact]
+        public async Task compare_two_users_return_not_empty_object()
+        {
+            var result = await _compare.CompareUsers(_firstUser, _secondUser);
+
+            result.ShouldNotBeNull();
+        }
     }
 }

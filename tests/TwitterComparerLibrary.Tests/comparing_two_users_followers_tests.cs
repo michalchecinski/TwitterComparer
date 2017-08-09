@@ -26,7 +26,7 @@ namespace TwitterComparerLibrary.Tests
         [Fact]
         public async Task common_followers_list_returns_not_empty_list()
         {
-            var commonFollowers = await _compareUsersFollowers.CommonFollowersListAsync(_firstUser, _secondUser);
+            var commonFollowers = await _compareUsersFollowers.GetCommonFollowersListAsync(_firstUser, _secondUser);
 
             commonFollowers.ShouldNotBeEmpty();
         }
@@ -43,7 +43,7 @@ namespace TwitterComparerLibrary.Tests
         public async Task web_exception_thrown_when_one_not_user()
         {
            await Should.ThrowAsync<WebException>(async () => 
-                await _compareUsersFollowers.CommonFollowersListAsync(_firstUser, "ofksofs"));
+                await _compareUsersFollowers.GetCommonFollowersListAsync(_firstUser, "ofksofs"));
 
         }
     }

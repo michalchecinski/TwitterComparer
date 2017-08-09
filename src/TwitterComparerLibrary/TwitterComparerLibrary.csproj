@@ -46,7 +46,8 @@
     <Compile Include="Cache.cs" />
     <Compile Include="Compare.cs" />
     <Compile Include="ICompare.cs" />
-    <Compile Include="Model\ComparedUsersDto.cs" />
+    <Compile Include="ICompareUsersFollowers.cs" />
+    <Compile Include="Model\CompareUsersResult.cs" />
     <Compile Include="CompareUsersFollowers.cs" />
     <Compile Include="CompareUsersFriends.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

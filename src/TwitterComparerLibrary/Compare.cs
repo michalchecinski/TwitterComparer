@@ -9,20 +9,27 @@ namespace TwitterComparerLibrary
 {
     public class Compare : ICompare
     {
-        public async Task<ComparedUsersDto> CompareUsers(string firstUserName, string secondUserName, string token)
+
+        private readonly string _token;
+
+        public Compare(string token)
         {
-            var userInformation = new UserInformation(token);
+            _token = token;
+        }
+        public async Task<CompareUsersResult> CompareUsers(string firstUserName, string secondUserName)
+        {
+            var userInformation = new UserInformation(_token);
 
             User firstUser = await userInformation.Get(firstUserName);
             User secondUser = await userInformation.Get(secondUserName);
 
-            var compareUserFollowers = new CompareUsersFollowers(token);
-            var compareUserFriends = new CompareUsersFriends(token);
+            var compareUserFollowers = new CompareUsersFollowers(_token);
+            var compareUserFriends = new CompareUsersFriends(_token);
 
             var commonFollowers = await compareUserFollowers.GetCommonFollowersListAsync(firstUserName, secondUserName);
             var commonFriends = await compareUserFriends.GetCommonFriendsListAsync(firstUserName, secondUserName);
 
-            return new ComparedUsersDto(firstUser, secondUser, commonFollowers, commonFriends);
+            return new CompareUsersResult(firstUser, secondUser, commonFollowers, commonFriends);
         }
     }
 }
