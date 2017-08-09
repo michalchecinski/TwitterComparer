@@ -10,7 +10,7 @@ namespace TwitterComparerLibrary
 {
     public class TwitterApiRequestHandler
     {
-        private static int _i;
+        private static int _requestNumber;
 
         private readonly string _token;
 
@@ -21,7 +21,7 @@ namespace TwitterComparerLibrary
 
         public async Task<List<User>> GetCommonUsersListAsync(string firstUserName, string secondUserName, string url, Cache cache)
         {
-            _i = 0;
+            _requestNumber = 0;
 
             var firstUserExist = await new UserInformation(_token).UserExistsAsync(firstUserName);
             var secondUserExist = await new UserInformation(_token).UserExistsAsync(secondUserName);
@@ -72,7 +72,7 @@ namespace TwitterComparerLibrary
             var userList = new List<User>();
             while (firstDeserialize.NextCursor != 0)
             {
-                _i++;
+                _requestNumber++;
                 var firstResult = await GetResultAsync(url + userName + "&cursor=" + firstDeserialize.NextCursor);
                 firstDeserialize = JsonConvert.DeserializeObject<JsonUsersRoot>(firstResult);
                 var temp = userList.Concat(firstDeserialize.Users);
@@ -99,7 +99,7 @@ namespace TwitterComparerLibrary
 
             if (result.StatusCode == ((System.Net.HttpStatusCode) 429))
             {
-                throw new WebException($"Twitter API rate limit exceeded after {_i} requests");
+                throw new WebException($"Twitter API rate limit exceeded after {_requestNumber} requests");
             }
 
             if (result.StatusCode == HttpStatusCode.NotFound)
