@@ -18,6 +18,12 @@ namespace TwitterComparerLibrary
         }
         public async Task<CompareUsersResult> CompareUsers(string firstUserName, string secondUserName)
         {
+            var cacheResult = Cache.Get(firstUserName, secondUserName);
+            if (cacheResult != null)
+            {
+                return cacheResult;
+            }
+
             var userInformation = new UserInformation(_token);
 
             User firstUser = await userInformation.Get(firstUserName);
@@ -29,7 +35,11 @@ namespace TwitterComparerLibrary
             var commonFollowers = await compareUserFollowers.GetCommonFollowersListAsync(firstUserName, secondUserName);
             var commonFriends = await compareUserFriends.GetCommonFriendsListAsync(firstUserName, secondUserName);
 
-            return new CompareUsersResult(firstUser, secondUser, commonFollowers, commonFriends);
+            var compareResult = new CompareUsersResult(firstUser, secondUser, commonFollowers, commonFriends);
+
+            Cache.Add(compareResult);
+
+            return compareResult;
         }
     }
 }

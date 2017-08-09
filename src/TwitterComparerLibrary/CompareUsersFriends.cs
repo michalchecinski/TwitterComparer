@@ -8,8 +8,6 @@ namespace TwitterComparerLibrary
     {
         private readonly string _token;
 
-        private static readonly Cache Cache = new Cache();
-
         public CompareUsersFriends(string token)
         {
             _token = token;
@@ -24,7 +22,7 @@ namespace TwitterComparerLibrary
         public async Task<List<User>> GetCommonFriendsListAsync(string firstUserName, string secondUserName)
         {
             const string url = "https://api.twitter.com/1.1/friends/list.json?screen_name=";
-            return await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url, Cache);
+            return await new TwitterApiRequestHandler(_token).GetCommonUsersListAsync(firstUserName, secondUserName, url);
         }
 
     }

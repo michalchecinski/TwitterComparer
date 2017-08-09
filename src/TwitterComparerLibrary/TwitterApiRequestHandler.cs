@@ -19,7 +19,7 @@ namespace TwitterComparerLibrary
             _token = token;
         }
 
-        public async Task<List<User>> GetCommonUsersListAsync(string firstUserName, string secondUserName, string url, Cache cache)
+        public async Task<List<User>> GetCommonUsersListAsync(string firstUserName, string secondUserName, string url)
         {
             _requestNumber = 0;
 
@@ -35,35 +35,12 @@ namespace TwitterComparerLibrary
                 throw new WebException($"User {secondUserName} does not exist");
             }
 
-            if (SameUserNames(firstUserName, secondUserName, cache) &&
-                cache.UpdateDateTime >= DateTime.Now.AddMinutes(-16))
-            {
-                return cache.UsersList;
-            }
-
             var firstList = await GetAllUsersListAsync(firstUserName, url);
             var secondList = await GetAllUsersListAsync(secondUserName, url);
 
             var list = GetIntersectUserList(firstList, secondList);
 
-            cache.Update(firstUserName, secondUserName, list);
-
-            return cache.UsersList;
-        }
-
-        private bool SameUserNames(string firstUserName, string secondUserName, Cache cache)
-        {
-            if (cache.FirstUser == firstUserName && cache.SecondUser == secondUserName)
-            {
-                return true;
-            }
-            if (cache.FirstUser == secondUserName && cache.SecondUser == firstUserName)
-            {
-                return true;
-            }
-
-            return false;
-
+            return list;
         }
 
         private async Task<List<User>> GetAllUsersListAsync(string userName, string url)

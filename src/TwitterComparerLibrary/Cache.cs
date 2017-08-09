@@ -1,29 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
+using TwitterComparerLibrary.Model;
 
 namespace TwitterComparerLibrary
 {
     public class Cache
     {
-        public string FirstUser { get; private set; }
-        public string SecondUser { get; private set; }
-        public DateTime UpdateDateTime { get; private set; }
-        public List<User> UsersList { get; private set; }
+        private static List<CompareUsersResult> results = new List<CompareUsersResult>();
 
-        public void Update(string firstUser, string secondUser, List<User> usersList, DateTime updateDateTime)
+        public static void Add(CompareUsersResult result)
         {
-            FirstUser = firstUser;
-            SecondUser = secondUser;
-            UpdateDateTime = updateDateTime;
-            UsersList = usersList;
+            if (results.Contains(result))
+            {
+                var foundResult = results.Find(x => SameUserNames(x.FirstUser.ScreenName, x.SecondUser.ScreenName, result));
+                foundResult.Update(result);
+            }
+            else
+            {
+                results.Add(result);
+            }
         }
 
-        public void Update(string firstUser, string secondUser, List<User> usersList)
+        public static CompareUsersResult Get(string firstUser, string secondUser)
         {
-            UpdateDateTime = DateTime.Now;
-            FirstUser = firstUser;
-            SecondUser = secondUser;
-            UsersList = usersList;
+            foreach (var result in results)
+            {
+                if (SameUserNames(firstUser, secondUser, result) &&
+                    result.LastUpdate >= DateTime.Now.AddMinutes(-16))
+                {
+                    return result;
+                }
+                    
+            }
+
+            return null;
+        }
+
+        private static bool SameUserNames(string firstUserName, string secondUserName, CompareUsersResult result)
+        {
+            if (result.FirstUser.ScreenName == firstUserName && result.SecondUser.ScreenName == secondUserName)
+            {
+                return true;
+            }
+            if (result.FirstUser.ScreenName == secondUserName && result.SecondUser.ScreenName == firstUserName)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

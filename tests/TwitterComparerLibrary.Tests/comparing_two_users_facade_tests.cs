@@ -26,5 +26,16 @@ namespace TwitterComparerLibrary.Tests
 
             result.ShouldNotBeNull();
         }
+
+        [Fact]
+        public async Task second_call_should_get_object_from_cache()
+        {
+            var firstResult = await _compare.CompareUsers(_firstUser, _secondUser);
+            var secondResult = await _compare.CompareUsers(_firstUser, _secondUser);
+
+            var cached = Cache.Get(_firstUser, _secondUser);
+
+            secondResult.ShouldBe(cached);
+        }
     }
 }
