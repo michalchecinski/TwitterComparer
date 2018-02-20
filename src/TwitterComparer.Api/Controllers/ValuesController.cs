@@ -11,9 +11,9 @@ namespace TwitterComparer.Api.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get(string first, string second)
         {
-            return new string[] { "value1", "value2" };
+            return Ok($"First='{first}' \r\nSecond='{second}'");
         }
 
         // GET api/values/5

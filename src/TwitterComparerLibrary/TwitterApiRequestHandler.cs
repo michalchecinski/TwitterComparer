@@ -76,12 +76,13 @@ namespace TwitterComparerLibrary
 
             if (result.StatusCode == ((System.Net.HttpStatusCode) 429))
             {
-                throw new WebException($"Twitter API rate limit exceeded after {_requestNumber} requests");
+                throw new WebException($"Twitter API rate limit exceeded after {_requestNumber} requests", WebExceptionStatus.ReceiveFailure);
             }
 
             if (result.StatusCode == HttpStatusCode.NotFound)
             {
                 throw new WebException("Content not found");
+
             }
 
             return await result.Content.ReadAsStringAsync();
