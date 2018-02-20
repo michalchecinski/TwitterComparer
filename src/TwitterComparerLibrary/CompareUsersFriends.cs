@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace TwitterComparerLibrary
 {
-    public class CompareUsersFriends
+    public class CompareUsersFriends : ICompareUsersFriends
     {
         private readonly string _token;
 
