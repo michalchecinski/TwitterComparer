@@ -34,6 +34,16 @@ namespace TwitterComparer.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string firstUser, string secondUser)
         {
+            if (firstUser == null)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest, "You have not include firstUser parameter in the URI.");
+            }
+
+            if (secondUser == null)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest, "You have not include secondUser parameter in the URI.");
+            }
+
             var customerKey = Configuration["TwitterCustomerKey"];
             var customerSecret = Configuration["TwitterCustomerSecret"];
 
