@@ -5,6 +5,6 @@ namespace TwitterComparerLibrary
 {
     public interface ICompare
     {
-        Task<CompareUsersResult> CompareUsers(string firstUserName, string secondUserName);
+        Task<CompareUsersResult> CompareUsers(string token, string firstUserName, string secondUserName);
     }
 }

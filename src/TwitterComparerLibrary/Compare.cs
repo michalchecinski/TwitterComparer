@@ -9,14 +9,7 @@ namespace TwitterComparerLibrary
 {
     public class Compare : ICompare
     {
-
-        private readonly string _token;
-
-        public Compare(string token)
-        {
-            _token = token;
-        }
-        public async Task<CompareUsersResult> CompareUsers(string firstUserName, string secondUserName)
+        public async Task<CompareUsersResult> CompareUsers(string token, string firstUserName, string secondUserName)
         {
             var cacheResult = Cache.Get(firstUserName, secondUserName);
             if (cacheResult != null)
@@ -24,13 +17,13 @@ namespace TwitterComparerLibrary
                 return cacheResult;
             }
 
-            var userInformation = new UserInformation(_token);
+            var userInformation = new UserInformation(token);
 
             User firstUser = await userInformation.Get(firstUserName);
             User secondUser = await userInformation.Get(secondUserName);
 
-            var compareUserFollowers = new CompareUsersFollowers(_token);
-            var compareUserFriends = new CompareUsersFriends(_token);
+            var compareUserFollowers = new CompareUsersFollowers(token);
+            var compareUserFriends = new CompareUsersFriends(token);
 
             var commonFollowers = await compareUserFollowers.GetCommonFollowersListAsync(firstUserName, secondUserName);
             var commonFriends = await compareUserFriends.GetCommonFriendsListAsync(firstUserName, secondUserName);
